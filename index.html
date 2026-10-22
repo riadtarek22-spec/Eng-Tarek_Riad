@@ -1,0 +1,2078 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080b12">
+  <meta name="description" content="طارق رياض - مطور واجهات أمامية. تصميم وتطوير مواقع احترافية للشركات والمطاعم والمشروعات.">
+  <title>طارق رياض | TR — Front-End Developer</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #080b12;
+      --card: #111825;
+      --gold: #e7b968;
+      --gold-light: #ffdc9a;
+      --text: #f6f7fb;
+      --muted: #a3adbd;
+      --border: rgba(231,185,104,.2);
+      --green: #25d366;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 90px;
+    }
+
+    body {
+      font-family: "Cairo", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -2;
+      background:
+        radial-gradient(ellipse at 15% 15%, rgba(74,91,170,.13), transparent 38%),
+        radial-gradient(ellipse at 85% 45%, rgba(231,185,104,.09), transparent 35%),
+        linear-gradient(160deg, #080b12, #0b101a 55%, #080b12);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .container {
+      width: min(1160px, 90%);
+      margin-inline: auto;
+    }
+
+    .mouse-light {
+      position: fixed;
+      width: 360px;
+      height: 360px;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: -1;
+      background: radial-gradient(circle, rgba(231,185,104,.075), transparent 70%);
+      transform: translate(-50%, -50%);
+      left: -500px;
+      top: -500px;
+    }
+
+    /* NAVIGATION */
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(8,11,18,.88);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+
+    .nav-inner {
+      min-height: 78px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 25px;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      font-weight: 900;
+      font-size: 21px;
+      white-space: nowrap;
+    }
+
+    .logo-mark {
+      width: 45px;
+      height: 45px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      border-radius: 13px;
+      font-size: 17px;
+      direction: ltr;
+    }
+
+    .logo small {
+      display: block;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 500;
+      line-height: 1.4;
+      letter-spacing: 1px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .nav-links a {
+      color: #d5d9e2;
+      font-size: 13px;
+      transition: .25s;
+    }
+
+    .nav-links a:hover {
+      color: var(--gold);
+    }
+
+    .nav-links .nav-cta {
+      padding: 10px 17px;
+      border-radius: 10px;
+      background: var(--gold);
+      color: #111;
+      font-weight: 800;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: transparent;
+      color: white;
+      border: 1px solid var(--border);
+      padding: 7px 12px;
+      border-radius: 9px;
+      cursor: pointer;
+      font-size: 22px;
+    }
+
+    /* GENERAL */
+
+    section {
+      padding: 95px 0;
+      position: relative;
+    }
+
+    .section-heading {
+      max-width: 720px;
+      margin: 0 auto 45px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(29px, 4vw, 43px);
+      font-weight: 900;
+      line-height: 1.4;
+      margin-bottom: 13px;
+    }
+
+    .section-heading h2 span,
+    .gold-text {
+      color: var(--gold);
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 13px 21px;
+      border-radius: 11px;
+      border: 1px solid transparent;
+      font-size: 13px;
+      font-weight: 800;
+      transition: .25s;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--gold-light), var(--gold));
+      color: #17120a;
+    }
+
+    .btn-outline {
+      border-color: rgba(231,185,104,.45);
+      color: var(--gold-light);
+      background: rgba(231,185,104,.035);
+    }
+
+    .btn-outline:hover {
+      background: rgba(231,185,104,.1);
+    }
+
+    /* HERO */
+
+    .hero {
+      min-height: 650px;
+      display: flex;
+      align-items: center;
+      padding: 80px 0 90px;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 55px;
+      align-items: center;
+    }
+
+    .availability {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 8px 14px;
+      background: rgba(37,211,102,.06);
+      border: 1px solid rgba(37,211,102,.2);
+      color: #b6f4cb;
+      border-radius: 30px;
+      font-size: 12px;
+      margin-bottom: 22px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 13px var(--green);
+    }
+
+    .hero h1 {
+      font-size: clamp(37px, 5vw, 65px);
+      font-weight: 900;
+      line-height: 1.35;
+      margin-bottom: 22px;
+    }
+
+    .hero h1 .highlight {
+      display: block;
+      color: var(--gold);
+      text-shadow: 0 0 35px rgba(231,185,104,.12);
+    }
+
+    .hero-description {
+      color: #b4bdcb;
+      max-width: 570px;
+      font-size: 15px;
+      margin-bottom: 30px;
+      line-height: 2.1;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 13px;
+    }
+
+    .hero-note {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 30px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .hero-note span::before {
+      content: "✓";
+      color: var(--gold);
+      margin-left: 7px;
+      font-weight: 900;
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 390px;
+      display: grid;
+      place-items: center;
+    }
+
+    .orbit {
+      position: absolute;
+      width: 330px;
+      height: 330px;
+      border: 1px solid rgba(231,185,104,.16);
+      border-radius: 50%;
+      animation: orbit 22s linear infinite;
+    }
+
+    .orbit::before {
+      content: "";
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background: var(--gold);
+      border-radius: 50%;
+      top: 42px;
+      right: 45px;
+      box-shadow: 0 0 20px var(--gold);
+    }
+
+    .orbit-two {
+      width: 260px;
+      height: 260px;
+      animation-direction: reverse;
+      border-style: dashed;
+    }
+
+    @keyframes orbit {
+      to { transform: rotate(360deg); }
+    }
+
+    .hero-monogram {
+      width: 235px;
+      height: 235px;
+      display: grid;
+      place-items: center;
+      border-radius: 38px;
+      border: 1px solid rgba(231,185,104,.5);
+      background:
+        radial-gradient(circle at 30% 20%, rgba(231,185,104,.14), transparent 45%),
+        linear-gradient(145deg, #151d2b, #0c111b);
+      box-shadow: 0 25px 90px rgba(0,0,0,.3);
+      transform: rotate(-4deg);
+      position: relative;
+    }
+
+    .hero-monogram strong {
+      font-size: 90px;
+      line-height: 1;
+      color: var(--gold);
+      letter-spacing: -8px;
+      direction: ltr;
+    }
+
+    .floating-tag {
+      position: absolute;
+      background: rgba(17,24,37,.94);
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      padding: 12px 16px;
+      box-shadow: 0 15px 35px rgba(0,0,0,.25);
+      font-size: 12px;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .floating-tag strong {
+      color: var(--gold);
+      display: block;
+      font-size: 15px;
+    }
+
+    .tag-top {
+      top: 28px;
+      right: 0;
+    }
+
+    .tag-bottom {
+      bottom: 28px;
+      left: 0;
+      animation-delay: -2s;
+    }
+
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-9px); }
+    }
+
+    /* STATS */
+
+    .stats {
+      padding: 0 0 65px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: rgba(255,255,255,.018);
+      overflow: hidden;
+    }
+
+    .stat {
+      padding: 25px 15px;
+      text-align: center;
+      border-left: 1px solid var(--border);
+    }
+
+    .stat:last-child {
+      border-left: 0;
+    }
+
+    .stat strong {
+      color: var(--gold);
+      display: block;
+      font-size: 25px;
+      font-weight: 900;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    /* SERVICES */
+
+    .services {
+      background: linear-gradient(180deg, transparent, rgba(255,255,255,.012), transparent);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .service-card {
+      padding: 28px;
+      background: linear-gradient(145deg, rgba(20,28,42,.92), rgba(12,17,27,.92));
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 20px;
+      transition: .3s;
+    }
+
+    .service-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--border);
+    }
+
+    .service-icon {
+      width: 53px;
+      height: 53px;
+      display: grid;
+      place-items: center;
+      border-radius: 15px;
+      background: rgba(231,185,104,.09);
+      color: var(--gold);
+      font-size: 25px;
+      margin-bottom: 20px;
+    }
+
+    .service-card h3 {
+      font-size: 18px;
+      margin-bottom: 11px;
+    }
+
+    .service-card p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 2;
+    }
+
+    /* PORTFOLIO */
+
+    .portfolio {
+      background: rgba(5,8,14,.38);
+    }
+
+    .portfolio-topline {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 20px;
+      margin-bottom: 35px;
+    }
+
+    .portfolio-topline .section-heading {
+      margin: 0;
+      text-align: right;
+    }
+
+    .portfolio-topline .section-heading h2 {
+      margin-bottom: 8px;
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 25px;
+    }
+
+    .project-card {
+      min-width: 0;
+      background: linear-gradient(145deg, #111825, #0c111b);
+      border: 1px solid var(--border);
+      border-radius: 21px;
+      overflow: hidden;
+      transition: transform .3s, border-color .3s, box-shadow .3s;
+    }
+
+    .project-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(231,185,104,.5);
+      box-shadow: 0 20px 50px rgba(0,0,0,.25);
+    }
+
+    .project-preview {
+      height: 300px;
+      background: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-preview iframe {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: #fff;
+    }
+
+    .preview-badge {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      z-index: 2;
+      padding: 6px 12px;
+      border-radius: 30px;
+      background: rgba(8,11,18,.92);
+      color: var(--gold-light);
+      border: 1px solid rgba(231,185,104,.4);
+      font-size: 10px;
+      font-weight: 800;
+      pointer-events: none;
+    }
+
+    .preview-open {
+      position: absolute;
+      bottom: 13px;
+      left: 13px;
+      z-index: 3;
+      background: rgba(8,11,18,.94);
+      color: white;
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 9px;
+      padding: 7px 11px;
+      font-size: 11px;
+    }
+
+    .project-info {
+      padding: 25px;
+    }
+
+    .project-category {
+      color: var(--gold);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .5px;
+    }
+
+    .project-info h3 {
+      font-size: 25px;
+      margin: 8px 0;
+    }
+
+    .project-info p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 2;
+      margin-bottom: 19px;
+    }
+
+    .project-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .project-actions .btn {
+      padding: 11px 15px;
+      font-size: 12px;
+    }
+
+    .project-placeholder {
+      height: 300px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      background:
+        radial-gradient(circle at 50% 40%, rgba(231,185,104,.13), transparent 45%),
+        linear-gradient(135deg, #111825, #090d15);
+    }
+
+    .placeholder-content strong {
+      display: block;
+      font-size: 38px;
+      color: var(--gold);
+      direction: ltr;
+    }
+
+    .placeholder-content span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .portfolio-note {
+      margin-top: 24px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    /* PROCESS */
+
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      counter-reset: steps;
+    }
+
+    .process-card {
+      padding: 25px 22px;
+      border-radius: 17px;
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,.06);
+      counter-increment: steps;
+    }
+
+    .process-card::before {
+      content: "0" counter(steps);
+      color: rgba(231,185,104,.4);
+      font-size: 30px;
+      font-weight: 900;
+      direction: ltr;
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .process-card h3 {
+      font-size: 16px;
+      margin-bottom: 9px;
+    }
+
+    .process-card p {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 2;
+    }
+
+    /* PRICING */
+
+    .pricing {
+      background: rgba(255,255,255,.012);
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    .price-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      padding: 29px 24px;
+      background: #101724;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 20px;
+    }
+
+    .price-card.featured {
+      border-color: rgba(231,185,104,.6);
+      background: linear-gradient(150deg, rgba(231,185,104,.09), #101724 48%);
+    }
+
+    .popular-label {
+      position: absolute;
+      top: -13px;
+      right: 22px;
+      background: var(--gold);
+      color: #14100a;
+      font-size: 10px;
+      font-weight: 900;
+      border-radius: 30px;
+      padding: 5px 13px;
+    }
+
+    .price-card h3 {
+      font-size: 19px;
+      margin-bottom: 6px;
+    }
+
+    .price-card .description {
+      color: var(--muted);
+      font-size: 12px;
+      min-height: 48px;
+    }
+
+    .price {
+      margin: 22px 0;
+      color: var(--gold-light);
+      font-size: 24px;
+      font-weight: 900;
+      line-height: 1.6;
+    }
+
+    .price small {
+      display: block;
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .price-card ul {
+      list-style: none;
+      margin: 0 0 25px;
+      flex: 1;
+    }
+
+    .price-card li {
+      font-size: 12px;
+      color: #d2d7e0;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,.045);
+    }
+
+    .price-card li::before {
+      content: "✓";
+      color: var(--gold);
+      margin-left: 9px;
+      font-weight: 900;
+    }
+
+    .price-card .btn {
+      width: 100%;
+      font-size: 12px;
+    }
+
+    .price-disclaimer {
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+      margin-top: 25px;
+    }
+
+    /* PAYMENT */
+
+    .payment-box {
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      gap: 35px;
+      padding: 38px;
+      border: 1px solid var(--border);
+      background: linear-gradient(135deg, rgba(231,185,104,.065), rgba(17,24,37,.85));
+      border-radius: 23px;
+      align-items: center;
+    }
+
+    .payment-box h3 {
+      font-size: 27px;
+      line-height: 1.5;
+      margin-bottom: 14px;
+    }
+
+    .payment-box p {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .payment-steps {
+      display: grid;
+      gap: 15px;
+    }
+
+    .payment-step {
+      display: flex;
+      gap: 15px;
+      align-items: flex-start;
+      padding: 17px;
+      border-radius: 13px;
+      background: rgba(8,11,18,.55);
+      border: 1px solid rgba(255,255,255,.055);
+    }
+
+    .payment-number {
+      flex: 0 0 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      background: rgba(231,185,104,.1);
+      color: var(--gold);
+      border-radius: 11px;
+      font-weight: 900;
+      direction: ltr;
+    }
+
+    .payment-step h4 {
+      font-size: 14px;
+      margin-bottom: 3px;
+    }
+
+    .payment-step p {
+      font-size: 12px;
+      line-height: 1.9;
+    }
+
+    /* HOSTING */
+
+    .hosting-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .hosting-card {
+      padding: 28px;
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 18px;
+    }
+
+    .hosting-card h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .hosting-card p {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 15px;
+    }
+
+    .hosting-price {
+      color: var(--gold-light);
+      font-size: 22px;
+      font-weight: 900;
+      margin-bottom: 16px;
+    }
+
+    .hosting-card .btn {
+      font-size: 12px;
+      padding: 10px 15px;
+      margin-top: 5px;
+    }
+
+    .hosting-note {
+      margin-top: 20px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    /* FAQ */
+
+    .faq-list {
+      max-width: 850px;
+      margin: auto;
+      display: grid;
+      gap: 12px;
+    }
+
+    .faq-item {
+      border: 1px solid rgba(255,255,255,.07);
+      background: var(--card);
+      border-radius: 13px;
+      overflow: hidden;
+    }
+
+    .faq-question {
+      width: 100%;
+      background: transparent;
+      color: var(--text);
+      border: 0;
+      padding: 19px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      text-align: right;
+      cursor: pointer;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .faq-question span:last-child {
+      color: var(--gold);
+      font-size: 21px;
+    }
+
+    .faq-answer {
+      display: none;
+      padding: 0 22px 20px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 2;
+    }
+
+    .faq-item.active .faq-answer {
+      display: block;
+    }
+
+    /* CONTACT */
+
+    .contact {
+      padding-bottom: 80px;
+    }
+
+    .contact-panel {
+      text-align: center;
+      padding: 65px 30px;
+      border-radius: 25px;
+      border: 1px solid rgba(231,185,104,.25);
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(231,185,104,.13), transparent 60%),
+        #0f1521;
+    }
+
+    .contact-panel h2 {
+      font-size: clamp(29px, 4vw, 43px);
+      line-height: 1.5;
+      margin-bottom: 15px;
+    }
+
+    .contact-panel p {
+      max-width: 600px;
+      margin: 0 auto 27px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .contact-actions {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 13px;
+    }
+
+    .contact-phone {
+      margin-top: 24px;
+      color: #c0c7d2;
+      font-size: 13px;
+    }
+
+    .contact-phone a {
+      color: var(--gold-light);
+      direction: ltr;
+      display: inline-block;
+      margin-inline: 5px;
+    }
+
+    /* FOOTER */
+
+    footer {
+      padding: 25px 0;
+      border-top: 1px solid rgba(255,255,255,.06);
+      background: rgba(0,0,0,.15);
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer-inner p {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .footer-brand {
+      font-weight: 900;
+      color: var(--gold);
+      direction: ltr;
+    }
+
+    .back-top {
+      width: 43px;
+      height: 43px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--gold);
+    }
+
+    .whatsapp-float {
+      position: fixed;
+      bottom: 23px;
+      left: 23px;
+      z-index: 900;
+      width: 57px;
+      height: 57px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--green);
+      color: #fff;
+      font-size: 27px;
+      box-shadow: 0 7px 25px rgba(37,211,102,.25);
+      transition: .25s;
+    }
+
+    .whatsapp-float:hover {
+      transform: scale(1.08);
+    }
+
+    /* REVEAL ANIMATIONS */
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity .65s ease, transform .65s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 950px) {
+      .nav-links {
+        gap: 12px;
+      }
+
+      .nav-links a {
+        font-size: 11px;
+      }
+
+      .hero-grid {
+        gap: 25px;
+      }
+
+      .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .process-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .pricing-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .price-card:last-child {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 700px) {
+      section {
+        padding: 70px 0;
+      }
+
+      .nav-inner {
+        min-height: 70px;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .nav-links {
+        position: absolute;
+        top: calc(100% + 1px);
+        right: 0;
+        left: 0;
+        display: none;
+        padding: 18px 5% 23px;
+        background: rgba(8,11,18,.98);
+        border-bottom: 1px solid var(--border);
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .nav-links a {
+        display: block;
+        padding: 12px 0;
+        font-size: 14px;
+      }
+
+      .nav-links .nav-cta {
+        text-align: center;
+        margin-top: 9px;
+      }
+
+      .hero {
+        padding: 60px 0 50px;
+        min-height: auto;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 15px;
+      }
+
+      .hero-description {
+        margin-inline: auto;
+      }
+
+      .hero-actions,
+      .hero-note {
+        justify-content: center;
+      }
+
+      .hero-visual {
+        min-height: 320px;
+        margin-top: 15px;
+      }
+
+      .hero-monogram {
+        width: 185px;
+        height: 185px;
+      }
+
+      .hero-monogram strong {
+        font-size: 72px;
+      }
+
+      .orbit {
+        width: 280px;
+        height: 280px;
+      }
+
+      .orbit-two {
+        width: 220px;
+        height: 220px;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .stat:nth-child(2) {
+        border-left: 0;
+      }
+
+      .stat:nth-child(-n+2) {
+        border-bottom: 1px solid var(--border);
+      }
+
+      .services-grid,
+      .portfolio-grid,
+      .pricing-grid,
+      .hosting-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .price-card:last-child {
+        grid-column: auto;
+      }
+
+      .portfolio-topline {
+        display: block;
+      }
+
+      .portfolio-topline .section-heading {
+        margin-bottom: 20px;
+      }
+
+      .project-preview {
+        height: 260px;
+      }
+
+      .project-placeholder {
+        height: 260px;
+      }
+
+      .payment-box {
+        grid-template-columns: 1fr;
+        padding: 24px;
+        gap: 25px;
+      }
+
+      .contact-panel {
+        padding: 45px 20px;
+      }
+
+      .footer-inner {
+        justify-content: center;
+        text-align: center;
+      }
+
+      .mouse-light {
+        display: none;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .container {
+        width: 92%;
+      }
+
+      .hero h1 {
+        font-size: 35px;
+      }
+
+      .hero-actions .btn {
+        width: 100%;
+      }
+
+      .process-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .project-actions .btn {
+        width: 100%;
+      }
+
+      .project-preview {
+        height: 225px;
+      }
+
+      .logo {
+        font-size: 17px;
+      }
+
+      .logo-mark {
+        width: 40px;
+        height: 40px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="mouse-light" id="mouseLight"></div>
+
+  <!-- القائمة الرئيسية -->
+  <header class="navbar">
+    <div class="container nav-inner">
+
+      <a href="#home" class="logo" aria-label="طارق رياض">
+        <span class="logo-mark">TR</span>
+        <span>
+          طارق رياض
+          <small>FRONT-END DEVELOPER</small>
+        </span>
+      </a>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="فتح القائمة" aria-expanded="false">
+        ☰
+      </button>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="#home">الرئيسية</a>
+        <a href="#services">خدماتي</a>
+        <a href="#portfolio">تنفيذاتي</a>
+        <a href="#process">طريقة العمل</a>
+        <a href="#pricing">الأسعار</a>
+        <a href="#hosting">الدومين والاستضافة</a>
+        <a href="#contact" class="nav-cta">اطلب موقعك</a>
+      </nav>
+
+    </div>
+  </header>
+
+  <main>
+
+    <!-- الواجهة الرئيسية -->
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+
+        <div class="hero-content reveal">
+
+          <div class="availability">
+            <span class="status-dot"></span>
+            جاهز لتنفيذ مشروعك القادم
+          </div>
+
+          <h1>
+            أنا طارق رياض
+            <span class="highlight">أحوّل فكرتك إلى موقع احترافي</span>
+          </h1>
+
+          <p class="hero-description">
+            مطور واجهات أمامية Front-End Developer، أساعد أصحاب الشركات
+            والمشروعات على امتلاك مواقع إلكترونية عصرية وسريعة ومتجاوبة
+            مع الموبايل والكمبيوتر، بتصميم يعكس قوة علامتهم التجارية.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#portfolio" class="btn btn-primary">شوف تنفيذاتي ↙</a>
+
+            <a
+              href="https://wa.me/201018974298?text=%D8%A3%D9%87%D9%84%D8%A7%20%D8%B7%D8%A7%D8%B1%D9%82%D8%8C%20%D8%B9%D8%A7%D9%8A%D8%B2%20%D8%A3%D8%B3%D8%AA%D9%81%D8%B3%D8%B1%20%D8%B9%D9%86%20%D8%AA%D9%86%D9%81%D9%8A%D8%B0%20%D9%85%D9%88%D9%82%D8%B9."
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-outline">
+              خلينا نتكلم واتساب
+            </a>
+          </div>
+
+          <div class="hero-note">
+            <span>تصميم متجاوب</span>
+            <span>تسعير واضح</span>
+            <span>اتفاق قبل التنفيذ</span>
+          </div>
+
+        </div>
+
+        <div class="hero-visual reveal" aria-label="شعار TR">
+          <div class="orbit"></div>
+          <div class="orbit orbit-two"></div>
+
+          <div class="hero-monogram">
+            <strong>TR</strong>
+          </div>
+
+          <div class="floating-tag tag-top">
+            <strong>Web Design</strong>
+            تصميم واجهات عصرية
+          </div>
+
+          <div class="floating-tag tag-bottom">
+            <strong>Responsive</strong>
+            لجميع الشاشات
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- إحصائيات -->
+    <section class="stats">
+      <div class="container">
+        <div class="stats-grid reveal">
+
+          <div class="stat">
+            <strong>TR</strong>
+            <span>علامتي الشخصية</span>
+          </div>
+
+          <div class="stat">
+            <strong>2+</strong>
+            <span>مشاريع في المعرض</span>
+          </div>
+
+          <div class="stat">
+            <strong>24/7</strong>
+            <span>إمكانية التواصل</span>
+          </div>
+
+          <div class="stat">
+            <strong>Mobile</strong>
+            <span>تصميم متجاوب</span>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- الخدمات -->
+    <section class="services" id="services">
+      <div class="container">
+
+        <div class="section-heading reveal">
+          <span class="eyebrow">WHAT I DO</span>
+          <h2>خدمات تساعد مشروعك <span>يظهر بشكل أقوى</span></h2>
+          <p>كل مشروع له احتياجاته، وبنختار شكل الموقع المناسب لهدفك وميزانيتك.</p>
+        </div>
+
+        <div class="services-grid">
+
+          <article class="service-card reveal">
+            <div class="service-icon">✦</div>
+            <h3>Landing Pages</h3>
+            <p>صفحات هبوط احترافية لعرض خدماتك أو منتجك وتشجيع الزائر على التواصل أو طلب الخدمة.</p>
+          </article>
+
+          <article class="service-card reveal">
+            <div class="service-icon">▣</div>
+            <h3>مواقع الشركات</h3>
+            <p>موقع يعرض نشاطك التجاري وخدماتك ومميزاتك وطرق التواصل مع شركتك بصورة احترافية.</p>
+          </article>
+
+          <article class="service-card reveal">
+            <div class="service-icon">⌘</div>
+            <h3>مواقع متعددة الصفحات</h3>
+            <p>مواقع تضم صفحات وأقسامًا متعددة حسب طبيعة مشروعك والمحتوى المطلوب عرضه.</p>
+          </article>
+
+          <article class="service-card reveal">
+            <div class="service-icon">◈</div>
+            <h3>تصميم واجهات المستخدم</h3>
+            <p>تنظيم المحتوى والألوان والأزرار والعناصر البصرية لتقديم تجربة استخدام واضحة.</p>
+          </article>
+
+          <article class="service-card reveal">
+            <div class="service-icon">↗</div>
+            <h3>مواقع متجاوبة</h3>
+            <p>تصميم يراعي أحجام الشاشات المختلفة، مع الاهتمام بالموبايل والكمبيوتر.</p>
+          </article>
+
+          <article class="service-card reveal">
+            <div class="service-icon">⚙</div>
+            <h3>نشر المواقع</h3>
+            <p>المساعدة في رفع الموقع على الإنترنت واختيار دومين واستضافة حسب احتياجات المشروع.</p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- معرض المشاريع -->
+    <section class="portfolio" id="portfolio">
+      <div class="container">
+
+        <div class="portfolio-topline reveal">
+          <div class="section-heading">
+            <span class="eyebrow">MY PORTFOLIO</span>
+            <h2>مشاريع من <span>تنفيذي</span></h2>
+            <p>مشاريع نفذتها بنفسي. اضغط على زر المعاينة لزيارة الموقع الحقيقي.</p>
+          </div>
+
+          <a href="#contact" class="btn btn-outline">عندك مشروع؟ تواصل معايا ↗</a>
+        </div>
+
+        <div class="portfolio-grid">
+
+          <!-- المشروع الأول: Vision Sign -->
+          <article class="project-card reveal">
+
+            <div class="project-preview">
+
+              <span class="preview-badge">LIVE WEBSITE</span>
+
+              <iframe
+                src="https://tarekmahmoud02244-creator.github.io/WAEL-RIAD_WL/"
+                title="معاينة موقع Vision Sign"
+                loading="lazy">
+              </iframe>
+
+              <a
+                href="https://tarekmahmoud02244-creator.github.io/WAEL-RIAD_WL/"
+                class="preview-open"
+                target="_blank"
+                rel="noopener noreferrer">
+                فتح الموقع ↗
+              </a>
+
+            </div>
+
+            <div class="project-info">
+
+              <span class="project-category">BUSINESS WEBSITE</span>
+
+              <h3>Vision Sign</h3>
+
+              <p>
+                موقع شركة متخصصة في اليافطات والكلادينج وتصنيع الحروف،
+                يعرض خدمات الشركة وطرق التواصل معها.
+              </p>
+
+              <div class="project-actions">
+
+                <a
+                  href="https://tarekmahmoud02244-creator.github.io/WAEL-RIAD_WL/"
+                  class="btn btn-primary"
+                  target="_blank"
+                  rel="noopener noreferrer">
+                  معاينة الموقع ↗
+                </a>
+
+                <a
+                  href="https://wa.me/201018974298?text=%D8%A3%D9%87%D9%84%D8%A7%20%D8%B7%D8%A7%D8%B1%D9%82%D8%8C%20%D8%B4%D9%81%D8%AA%20%D9%85%D8%B4%D8%B1%D9%88%D8%B9%20Vision%20Sign%20%D9%88%D8%B9%D8%A7%D9%8A%D8%B2%20%D9%85%D9%88%D9%82%D8%B9%20%D8%B4%D8%A8%D9%8A%D9%87."
+                  class="btn btn-outline"
+                  target="_blank"
+                  rel="noopener noreferrer">
+                  اطلب موقعًا مشابهًا
+                </a>
+
+              </div>
+            </div>
+          </article>
+
+          <!-- المشروع الثاني: Safari Cafe -->
+          <article class="project-card reveal">
+
+            <div class="project-preview">
+
+              <span class="preview-badge">LIVE WEBSITE</span>
+
+              <iframe
+                src="https://tarekmahmoud02244-creator.github.io/safary_Cafe/"
+                title="معاينة موقع Safari Cafe"
+                loading="lazy">
+              </iframe>
+
+              <a
+                href="https://tarekmahmoud02244-creator.github.io/safary_Cafe/"
+                class="preview-open"
+                target="_blank"
+                rel="noopener noreferrer">
+                فتح الموقع ↗
+              </a>
+
+            </div>
+
+            <div class="project-info">
+
+              <span class="project-category">CAFE WEBSITE</span>
+
+              <h3>Safari Cafe</h3>
+
+              <p>
+                موقع كافيه من تنفيذي، أضفته إلى معرض أعمالي ليتمكن
+                العملاء من معاينته والاطلاع على المشروع مباشرة.
+              </p>
+
+              <div class="project-actions">
+
+                <a
+                  href="https://tarekmahmoud02244-creator.github.io/safary_Cafe/"
+                  class="btn btn-primary"
+                  target="_blank"
+                  rel="noopener noreferrer">
+                  معاينة الموقع ↗
+                </a>
+
+                <a
+                  href="https://wa.me/201018974298?text=%D8%A3%D9%87%D9%84%D8%A7%20%D8%B7%D8%A7%D8%B1%D9%82%D8%8C%20%D8%B4%D9%81%D8%AA%20%D9%85%D8%B4%D8%B1%D9%88%D8%B9%20Safari%20Cafe%20%D9%88%D8%B9%D8%A7%D9%8A%D8%B2%20%D9%85%D9%88%D9%82%D8%B9%20%D9%84%D9%85%D8%B4%D8%B1%D9%88%D8%B9%D9%8A."
+                  class="btn btn-outline"
+                  target="_blank"
+                  rel="noopener noreferrer">
+                  اطلب موقعًا مشابهًا
+                </a>
+
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+        <p class="portfolio-note">
+          سيتم إضافة مشاريع أخرى إلى المعرض عند توفر روابطها.
+        </p>
+
+      </div>
+    </section>
+
+    <!-- طريقة العمل -->
+    <section id="process">
+      <div class="container">
+
+        <div class="section-heading reveal">
+          <span class="eyebrow">HOW I WORK</span>
+          <h2>من أول فكرة <span>لحد استلام موقعك</span></h2>
+          <p>خطوات واضحة تساعدك تعرف إيه اللي هيحصل في كل مرحلة.</p>
+        </div>
+
+        <div class="process-grid">
+
+          <article class="process-card reveal">
+            <h3>فهم المشروع</h3>
+            <p>نتفق على فكرة الموقع والأقسام والمميزات المطلوبة ونعرف الهدف الأساسي منه.</p>
+          </article>
+
+          <article class="process-card reveal">
+            <h3>تحديد السعر والمدة</h3>
+            <p>أحدد التكلفة التقديرية وموعد التسليم بعد معرفة تفاصيل المشروع ونطاق التنفيذ.</p>
+          </article>
+
+          <article class="process-card reveal">
+            <h3>التصميم والتنفيذ</h3>
+            <p>أبدأ العمل بعد الاتفاق واستلام الدفعة المقدمة، وأشاركك التحديثات حسب الاتفاق.</p>
+          </article>
+
+          <article class="process-card reveal">
+            <h3>المراجعة والتسليم</h3>
+            <p>تراجع الموقع، ونتعامل مع التعديلات المتفق عليها، ثم يتم استكمال الدفع والتسليم.</p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- الأسعار -->
+    <section class="pricing" id="pricing">
+      <div class="container">
+
+        <div class="section-heading reveal">
+          <span class="eyebrow">PRICING PLANS</span>
+          <h2>أسعار مبدئية <span>تناسب حجم مشروعك</span></h2>
+          <p>الأسعار استرشادية، والسعر النهائي يتحدد بعد معرفة تفاصيل مشروعك.</p>
+        </div>
+
+        <div class="pricing-grid">
+
+          <article class="price-card reveal">
+            <h3>Landing Page</h3>
+            <p class="description">صفحة هبوط احترافية للتعريف بخدمة أو منتج.</p>
+
+            <div class="price">
+              3,000 – 5,000 جنيه
+              <small>مدة تقديرية: 4–7 أيام عمل</small>
+            </div>
+
+            <ul>
+              <li>تصميم صفحة واحدة</li>
+              <li>متوافق مع الموبايل والكمبيوتر</li>
+              <li>أقسام حسب طبيعة المشروع</li>
+              <li>أزرار التواصل وواتساب</li>
+              <li>مراجعة قبل التسليم</li>
+            </ul>
+
+            <a
+              href="https://wa.me/201018974298?text=%D8%A3%D9%87%D9%84%D8%A7%20%D8%B7%D8%A7%D8%B1%D9%82%D8%8C%20%D8%B9%D8%A7%D9%8A%D8%B2%20%D8%A3%D8%B3%D8%AA%D9%81%D8%B3%D8%B1%20%D8%B9%D9%86%20%D8%B3%D8%B9%D8%B1%20Landing%20Page."
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-outline">
+              اطلب عرض سعر
+            </a>
+          </article>
+
+          <article class="price-card featured reveal">
+            <span class="popular-label">اختيار مناسب للشركات</span>
+
+            <h3>موقع شركة أو نشاط تجاري</h3>
+            <p class="description">موقع يعرض خدماتك ويقدم نشاطك للعملاء بصورة احترافية.</p>
+
+            <div class="price">
+              5,000 – 9,000 جنيه
+              <small>مدة تقديرية: 7–14 يوم عمل</small>
+            </div>
+
+            <ul>
+              <li>صفحات وأقسام حسب الاتفاق</li>
+              <li>تصميم متجاوب</li>
+              <li>عرض الخدمات ومعلومات الشركة</li>
+              <li>أزرار اتصال وواتساب</li>
+              <li>تهيئة أساسية لمحركات البحث</li>
+              <li>مراجعة قبل التسليم</li>
+            </ul>
+
+            <a
+              href="https://wa.me/201018974298?text=%D8%A3%D9%87%D9%84%D8%A7%20%D8%B7%D8%A7%D8%B1%D9%82%D8%8C%20%D8%B9%D8%A7%D9%8A%D8%B2%20%D8%B9%D8%B1%D8%B6%20%D8%B3%D8%B9%D8%B1%20%D9%84%D9%85%D9%88%D9%82%D8%B9%20%D8%B4%D8%B1%D9%83%D8%A9."
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-primary">
+              اطلب عرض سعر
+            </a>
+          </article>
+
+          <article class="price-card reveal">
+            <h3>موقع متعدد الصفحات</h3>
+            <p class="description">مشروع أكبر بمحتوى وصفحات متعددة حسب احتياجاتك.</p>
+
+            <div class="price">
+              8,000 – 15,000 جنيه
+              <small>مدة تقديرية: 10–21 يوم عمل</small>
+            </div>
+
+            <ul>
+              <li>عدة صفحات مترابطة</li>
+              <li>تصميم متناسق بين الصفحات</li>
+              <li>تجربة استخدام منظمة</li>
+              <li>تجاوب مع أحجام الشاشات</li>
+              <li>مراجعة واختبار قبل التسليم</li>
+            </ul>
+
+            <a
+              href="https://wa.me/201018974298?text=%D8%A3%D9%87%D9%84%D8%A7%20%D8%B7%D8%A7%D8%B1%D9%82%D8%8C%20%D8%B9%D8%A7%D9%8A%D8%B2%20%D8%B9%D8%B1%D8%B6%20%D8%B3%D8%B9%D8%B1%20%D9%84%D9%85%D9%88%D9%82%D8%B9%20%D9%85%D8%AA%D8%B9%D8%AF%D8%AF%20%D8%A7%D9%84%D8%B5%D9%81%D8%AD%D8%A7%D8%AA."
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-outline">
+              اطلب عرض سعر
+            </a>
+          </article>
+
+        </div>
+
+        <p class="price-disclaimer">
+          الأسعار بالجنيه المصري للتقدير المبدئي فقط، وقد تختلف بحسب التفاصيل
+          والوظائف المطلوبة والمحتوى والتعديلات المتفق عليها.
+          المدد تقديرية وتبدأ بعد الاتفاق وتوفير المحتوى اللازم.
+        </p>
+
+      </div>
+    </section>
+
+    <!-- نظام الدفع -->
+    <section id="payment">
+      <div class="container">
+
+        <div class="payment-box reveal">
+
+          <div>
+            <span class="eyebrow">CLEAR PAYMENT TERMS</span>
+            <h3>
+              اتفاق واضح من البداية،
+              <span class="gold-text">من غير مفاجآت.</span>
+            </h3>
+            <p>
+              قبل بدء التنفيذ، بنحدد تفاصيل المشروع والسعر والمدة
+              ونطاق التعديلات وطريقة التسليم، عشان كل طرف يكون عارف
+              حقوقه والتزاماته.
+            </p>
+          </div>
+
+          <div class="payment-steps">
+
+            <div class="payment-step">
+              <div class="payment-number">50%</div>
+              <div>
+                <h4>الدفعة الأولى قبل التنفيذ</h4>
+                <p>يتم دفع 50% من قيمة المشروع بعد الاتفاق على التفاصيل وقبل بدء العمل.</p>
+              </div>
+            </div>
+
+            <div class="payment-step">
+              <div class="payment-number">50%</div>
+              <div>
+                <h4>الدفعة الثانية بعد المراجعة</h4>
+                <p>يتم دفع باقي المبلغ بعد اكتمال الموقع ومراجعته وفق الاتفاق، وقبل التسليم النهائي.</p>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- الدومين والاستضافة -->
+    <section id="hosting">
+      <div class="container">
+
+        <div class="section-heading reveal">
+          <span class="eyebrow">GO LIVE</span>
+          <h2>خلّي موقعك متاحًا <span>على الإنترنت</span></h2>
+          <p>تقدر تبدأ برابط مجاني، أو تستخدم دومين خاص باسم مشروعك مع استضافة مناسبة.</p>
+        </div>
+
+        <div class="hosting-grid">
+
+          <article class="hosting-card reveal">
+            <h3>🆓 نشر مجاني</h3>
+            <p>
+              مناسب للمواقع الثابتة التي تتكون من HTML وCSS وJavaScript.
+              يمكنك استخدام رابط تابع لمنصة النشر بدل شراء دومين خاص.
+            </p>
+
+            <div class="hosting-price">0 جنيه كبداية*</div>
+
+            <p>الخدمات المجانية تخضع لشروط وحدود كل منصة.</p>
+
+            <a
+              href="https://pages.github.com/"
+              class="btn btn-outline"
+              target="_blank"
+              rel="noopener noreferrer">
+              GitHub Pages ↗
+            </a>
+
+            <a
+              href="https://www.netlify.com/"
+              class="btn btn-outline"
+              target="_blank"
+              rel="noopener noreferrer">
+              Netlify ↗
+            </a>
+          </article>
+
+          <article class="hosting-card reveal">
+            <h3>🌐 دومين واستضافة مدفوعة</h3>
+            <p>
+              مناسبة لو عايز اسم نطاق خاص بمشروعك، مثل example.com،
+              مع خدمة استضافة وفق احتياجات الموقع.
+            </p>
+
+            <div class="hosting-price">حسب الدومين والخطة</div>
+
+            <p>
+              التكلفة تختلف حسب امتداد الدومين والشركة وخطة الاستضافة
+              ومدة الاشتراك. يتم التأكد من السعر قبل الشراء.
+            </p>
+
+            <a
+              href="https://www.cloudflare.com/products/registrar/"
+              class="btn btn-outline"
+              target="_blank"
+              rel="noopener noreferrer">
+              استكشاف الدومينات ↗
+            </a>
+          </article>
+
+        </div>
+
+        <p class="hosting-note">
+          * النشر المجاني مش مناسب لكل أنواع المواقع. المواقع التي تحتاج إلى قواعد بيانات
+          أو تسجيل دخول أو لوحة تحكم قد تحتاج إلى خدمات إضافية. أسعار الدومين والاستضافة
+          منفصلة عن أسعار تصميم الموقع، إلا إذا تم الاتفاق على غير ذلك.
+        </p>
+
+      </div>
+    </section>
+
+    <!-- الأسئلة الشائعة -->
+    <section id="faq">
+      <div class="container">
+
+        <div class="section-heading reveal">
+          <span class="eyebrow">FAQ</span>
+          <h2>أسئلة <span>بتهمك</span></h2>
+          <p>إجابات مختصرة عن أهم التفاصيل قبل بدء المشروع.</p>
+        </div>
+
+        <div class="faq-list">
+
+          <article class="faq-item reveal">
+            <button class="faq-question" aria-expanded="false">
+              <span>هل السعر يشمل الدومين والاستضافة؟</span>
+              <span>+</span>
+            </button>
+            <div class="faq-answer">
+              لا، أسعار تصميم الموقع منفصلة عن تكلفة الدومين والاستضافة،
+              إلا إذا اتفقنا على باقة تشملها. ويمكن نشر بعض المواقع الثابتة مجانًا.
+            </div>
+          </article>
+
+          <article class="faq-item reveal">
+            <button class="faq-question" aria-expanded="false">
+              <span>هل أدفع المبلغ كاملًا قبل التنفيذ؟</span>
+              <span>+</span>
+            </button>
+            <div class="faq-answer">
+              نظام الدفع هو 50% قبل بدء التنفيذ و50% بعد اكتمال الموقع ومراجعته
+              وفق الاتفاق، وقبل التسليم النهائي.
+            </div>
+          </article>
+
+          <article class="faq-item reveal">
+            <button class="faq-question" aria-expanded="false">
+              <span>هل الموقع هيشتغل على الموبايل؟</span>
+              <span>+</span>
+            </button>
+            <div class="faq-answer">
+              يتم تصميم الموقع ليكون متجاوبًا مع أحجام الشاشات المختلفة،
+              مع مراعاة اختبار العرض قبل التسليم.
+            </div>
+          </article>
+
+          <article class="faq-item reveal">
+            <button class="faq-question" aria-expanded="false">
+              <span>هل أقدر أطلب تعديلات بعد ما أشوف الموقع؟</span>
+              <span>+</span>
+            </button>
+            <div class="faq-answer">
+              نعم، تتم مراجعة الموقع والتعامل مع التعديلات التي يشملها الاتفاق.
+              الإضافات الكبيرة أو الوظائف الجديدة يمكن تقدير تكلفتها ووقتها بشكل منفصل.
+            </div>
+          </article>
+
+          <article class="faq-item reveal">
+            <button class="faq-question" aria-expanded="false">
+              <span>إزاي أبدأ وأطلب عرض سعر؟</span>
+              <span>+</span>
+            </button>
+            <div class="faq-answer">
+              تواصل معي على واتساب واشرح فكرة مشروعك والصفحات التي تحتاجها.
+              بعدها نحدد المتطلبات والمدة والتكلفة قبل بدء التنفيذ.
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- التواصل -->
+    <section class="contact" id="contact">
+      <div class="container">
+
+        <div class="contact-panel reveal">
+
+          <span class="eyebrow">LET'S BUILD SOMETHING GREAT</span>
+
+          <h2>
+            عندك فكرة مشروع؟
+            <span class="gold-text">يلا ننفذها!</span>
+          </h2>
+
+          <p>
+            ابعتلي تفاصيل مشروعك، ونتكلم عن أفضل شكل للموقع
+            والتكلفة والمدة المناسبة لاحتياجاتك.
+          </p>
+
+          <div class="contact-actions">
+
+            <a
+              href="https://wa.me/201018974298?text=%D8%A3%D9%87%D9%84%D8%A7%20%D8%B7%D8%A7%D8%B1%D9%82%D8%8C%20%D8%B9%D8%A7%D9%8A%D8%B2%20%D8%A3%D8%B9%D9%85%D9%84%20%D9%85%D9%88%D9%82%D8%B9%20%D9%88%D8%B9%D8%A7%D9%8A%D8%B2%20%D8%A3%D8%B9%D8%B1%D9%81%20%D8%A7%D9%84%D8%AA%D9%81%D8%A7%D8%B5%D9%8A%D9%84."
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-primary">
+              تواصل واتساب ↗
+            </a>
+
+            <a href="tel:+201097727165" class="btn btn-outline">
+              اتصل بيا الآن
+            </a>
+
+          </div>
+
+          <div class="contact-phone">
+            واتساب:
+            <a href="https://wa.me/201018974298" target="_blank" rel="noopener noreferrer">
+              01018974298
+            </a>
+            <br>
+            الاتصال:
+            <a href="tel:+201097727165">01097727165</a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- التذييل -->
+  <footer>
+    <div class="container footer-inner">
+
+      <a href="#home" class="footer-brand">TR — TAREK RIAD</a>
+
+      <p>© <span id="year"></span> طارق رياض. جميع الحقوق محفوظة.</p>
+
+      <a href="#home" class="back-top" aria-label="العودة إلى الأعلى">↑</a>
+
+    </div>
+  </footer>
+
+  <!-- زر واتساب العائم -->
+  <a
+    href="https://wa.me/201018974298?text=%D8%A3%D9%87%D9%84%D8%A7%20%D8%B7%D8%A7%D8%B1%D9%82%D8%8C%20%D8%B9%D8%A7%D9%8A%D8%B2%20%D8%A3%D8%B3%D8%AA%D9%81%D8%B3%D8%B1%20%D8%B9%D9%86%20%D8%AA%D9%86%D9%81%D9%8A%D8%B0%20%D9%85%D9%88%D9%82%D8%B9."
+    target="_blank"
+    rel="noopener noreferrer"
+    class="whatsapp-float"
+    aria-label="تواصل عبر واتساب">
+    ☎
+  </a>
+
+  <script>
+    // السنة الحالية
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // قائمة الموبايل
+    const menuToggle = document.getElementById("menuToggle");
+    const navLinks = document.getElementById("navLinks");
+
+    menuToggle.addEventListener("click", function () {
+      const isOpen = navLinks.classList.toggle("open");
+
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
+      menuToggle.textContent = isOpen ? "×" : "☰";
+    });
+
+    // إغلاق القائمة بعد الضغط على رابط
+    navLinks.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", function () {
+        navLinks.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.textContent = "☰";
+      });
+    });
+
+    // الإضاءة التي تتبع حركة الماوس
+    const mouseLight = document.getElementById("mouseLight");
+
+    window.addEventListener("mousemove", function (event) {
+      mouseLight.style.left = event.clientX + "px";
+      mouseLight.style.top = event.clientY + "px";
+    }, { passive: true });
+
+    // إظهار الأقسام أثناء التمرير
+    const revealElements = document.querySelectorAll(".reveal");
+
+    if ("IntersectionObserver" in window) {
+      const revealObserver = new IntersectionObserver(function (entries, observer) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.12
+      });
+
+      revealElements.forEach(function (element) {
+        revealObserver.observe(element);
+      });
+    } else {
+      revealElements.forEach(function (element) {
+        element.classList.add("visible");
+      });
+    }
+
+    // الأسئلة الشائعة
+    document.querySelectorAll(".faq-question").forEach(function (button) {
+      button.addEventListener("click", function () {
+        const item = button.closest(".faq-item");
+        const isActive = item.classList.toggle("active");
+
+        button.setAttribute("aria-expanded", String(isActive));
+        button.querySelector("span:last-child").textContent = isActive ? "−" : "+";
+      });
+    });
+  </script>
+
+</body>
+</html>
